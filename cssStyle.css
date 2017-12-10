@@ -1,10 +1,10 @@
 body {
 background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
 margin-top: 25px;
--webkit-animation: fadein 2s; /* Safari, Chrome and Opera */
--moz-animation: fadein 2s; /* Firefox */
--ms-animation: fadein 2s; /* Internet Explorer */
--o-animation: fadein 2s; /* Opera */
+-webkit-animation: fadein 2s; /* -Safari /  Chrome / Opera- */
+-moz-animation: fadein 2s; /* -Firefox- */
+-ms-animation: fadein 2s; /* -Internet Explorer- */
+-o-animation: fadein 2s; /* -Opera- */
 animation: fadein 2s;
 padding:0;
 margin:0;
