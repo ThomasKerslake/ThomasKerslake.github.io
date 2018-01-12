@@ -1,146 +1,217 @@
-//Creating the Array called 'lineArray'
-var lineArray = [];
-//Setting the size of the array to 10
-var arraySize = 10;
-//Setting up the boolean for my area detection
-var clickArea;
-//Setting up the boolean for my clear canvas function
-var cleanUp = false;
+// Thomas Kerslake - Data visualization - Assignment 2.
 
+// Creating an empty Array called 'OrbArray'
+var OrbArray = [];
 
-//Setting up the canvas for the creative code to be displayed on
+// Variables to hold sections of the API link to open options for modifactions.
+var api = 'http://api.population.io:80/1.0/life-expectancy/remaining/';
+var sex = 'male';
+var date = '1987';
+var country = 'Germany';
+var age = '32'
+var data;
+
+//Variables for the button input
+let getInput = 17; //current button state
+let getInputCheck = 0; //check for the switch
+let input;
+
+// Creating variables to hold data from the API
+let getCountry;
+let getLifeExpectancy;
+let getDOB;
+let getSex;
+// Setting up the canvas for the creative code to be displayed on.
 function setup() {
-var canvas = createCanvas(594, 841);
-    background(231,255,255);
-    canvas.class("myCanvas");
-    canvas.parent("myContainer");
-//Sets up a loop to create a new line for the size of the array (10) 
-for (let z=0; z<arraySize; z++){
-//Sets the array, 'lineArray', to be equal to (hold) the value of 'i'
-lineArray[z] = new Line(297, 420, random(-4, 4), random(-4, 4), 320);
-            }
+  var canvas = createCanvas(1240, 720);
+
+
+  background(194, 200, 209);
+  canvas.class("myCanvas"); //Linking canvas to HTML page
+  canvas.parent("myContainer");
+  loadAPI(getInput); // Calling my function to load the data from the API
+
+// Setting the variables to be strings
+  getCountry = "";
+  getLifeExpectancy = "";
+  getDOB = "";
+  getSex = "";
+  getAge = "";
+
 }
 
-//Setting up the draw function
-function draw() {
-    
-//This is checking the mouses position for both the x/y cords to see it its within the
-//area I have limited it to (x of 0 to 594, and y of 0 to 841)
-if(mouseX >= 0 && mouseX <= 0+594 && mouseY >= 0 && mouseY <= 0+841){
-    clickArea = true;
-} 
-else{
-   clickArea = false;
+// My function to connect and load data from the api with specific values
+function loadAPI(theUserAge) {
+  loadJSON(api + sex + "/" + country + "/" + date + "-01-01" + "/" + theUserAge + "y/", getData); //Loading the API with a specific query.
 }
 
-//Checking if 'clickArea' is equal to true, then if 'cleanUp' is equal to true.
-//If both are true then it will continuously update the background colour with the
-//set colour, creating this effect of clearing all previous lines that have been drawn.
-if(clickArea == true){ //This has been set so the user can only 'clearUp' if their mouse is over the canvas.
-   if(cleanUp == true){   
-       background(231,255,255);            //** See lines '52' to '64' for the related functions**
-   }
-}
+// Call back function to allow reference to the API
+function getData(dataCallback){
+  data = dataCallback;
 
-    
-//Sets up a loop to display equal to the number of 'units' in the string in 'lineArray'
-  for (let z=0; z<lineArray.length; z++){
-//Makes the array adhere to both the functions, 'moveLineFunction' and 'drawLineFunction'
-    lineArray[z].moveLineFunction();
-    lineArray[z].drawLineFunction();
+// Setting the values for my strings to hold (with data from the API)
+  getCountry = data.country;
+  getLifeExpectancy = round(data.remaining_life_expectancy);
+  getDOB = data.date;
+  getSex = data.sex;
+  getAge = data.age;
+
+  // Creating a variable to hold the value of 'remaining_life_expectancy' (this value will then be used in the for loop bellow)
+  var rleData = round(data.remaining_life_expectancy);
+  // Setting up a for loop to create a number of 'Orbs' equal to the value of 'rleData'.
+  for (let v=0; v<rleData; v++){
+    // Setting the array 'OrbArray' to hold the generated 'Orbs'.
+    OrbArray[v] = new Orb(width/2, height/2, random(-3, 3), random(-3, 3), random(15));
   }
 }
 
-//This function is used to check if a specific key has been pressed
+//Draw function
+function draw() {
+  background(194, 200, 209);
+
+  //Interface elements to get data in sketch
+  input = select('#userAge');
+  getInput = input.value();
+
+  //This is a switch to check new changes and call the API with the new changes
+  if(getInputCheck != getInput){ //Check if new data are different from previous - if yes call the API
+    loadAPI(getInput); //Call the API with the new parameter (new user input)
+    getInputCheck = getInput;
+  } //ensure that the switch is updated with the new user input (so that we don't repeat in next draw loop)
+
+  drawInfo();//Function callled to display information to the user
+  // Setting up a loop to run untill equal the total entries (length) in the 'OrbArray'
+  for (let v=0; v<OrbArray.length; v++){
+    // The for loop will push out new 'Orbs' from the array that follow the connected functions.
+    OrbArray[v].moveOrbFunction();
+    OrbArray[v].drawOrbFunction();
+  }
+}
+
+// Function that holds data to be displayed to the user
+function drawInfo(){
+  push();// The start of the 'expand' animation
+  translate(width / 2, height / 2);
+  var scaleValue = 0.5;
+  var theMaximum = 20;
+  if (frameCount < theMaximum) {
+    var currentScale = map(frameCount, 0, theMaximum, 0, scaleValue);
+    scale(1.5 + currentScale);
+  }
+  else {
+    scale(1.5 + scaleValue);
+  }// End of the 'expand' animation code.
+
+  // Header and footer on canvas.
+  noStroke();
+  fill(0, 200);
+  rect(-350,-190, 700, 50);
+  rect(-350,140, 700, 50);
+
+  // Center box / lines on cavas.
+  noFill();
+  stroke(1);
+  rect(-350,-30, 700, 50);
+
+  // Grabing and displaying data on header / footer / center.
+  fill(0);
+  noStroke();
+  textFont('Arial');
+  textSize(35);
+  fill(255);
+  text(getCountry.toUpperCase(), -90, 8); // Displaying the country in the center of the canvas
+  textSize(14);
+  text("RLE: " + getLifeExpectancy + " YEARS",-300, 165); // Remaining life expectancy
+  text("AGE: " + getAge, -300, -157); // Age
+  text("DOB: " + getDOB, 195, -157); // Date of birth
+  text("SEX: " + getSex.toUpperCase(), 225, 165); // Sex (male / female)
+  pop();
+}
+
+// Global function I have used to check a specific key (if its been pressed).
 function keyPressed(){
-    if(keyCode === RIGHT_ARROW){ //Checking for is the 'RIGHT_ARROW' key is being pressed down.
-    cleanUp = true;
-    }
-    return false; //Used to stop default behaviour  
+  if(keyCode === RIGHT_ARROW){ // Checking for the 'RIGHT_ARROW' key.
+  cleanUp = true;
+}
+return false; // Used to stop default behaviour
 }
 
+// Global function I have used to check a specific key (if its been released).
 function keyReleased(){
-    if(keyCode === RIGHT_ARROW){ //Checking for is the 'RIGHT_ARROW' key has been released.
-    cleanUp = false; //Oposite for if the key is being pressed.
-    }
-    return false; //Used to stop default behaviour  
+  if(keyCode === RIGHT_ARROW){ // Checking for is the 'RIGHT_ARROW' key.
+  cleanUp = false; // Oposite for key being pressed.
+}
+return false; // Used to stop default behaviour
 }
 
 
-//The setup for my line class
-class Line{
-
-//Setting up a constructor to give my 'Line' (object) functions 
-constructor(x1, y1, speedX, speedY, size){ //Arguments for the method (constructor)
-    //Setup of the line class' variables
-    // 'this.' is used as they refer directly to the object, also it allows them to be used within other functions (public).
+// The creation of my 'Orb' class
+class Orb{
+  // Constructor to give my 'Orb' (object) functions.
+  constructor(x1, y1, speedX, speedY, size){ //Arguments for the method (constructor)
+    // The Orb class' variables
     this.speedX = speedX;
     this.speedY = speedY;
     this.x1 = x1;
     this.y1 = y1;
-
-    //Setting up the random value selection to be used in a fill() function. 
-    this.Red = random(255);
-    this.Green = random(255);
-    this.Blue = random(255);
-    
-    //Setting up the size and the value for the opacity of each line (255 = full)
-    this.Alpha = 255;
+    //Random value selection to be used in a fill() function to colour 'Orbs'.
+    this.colValue = random(255);
+    //Size and value for the opacity of each 'Orb'
+    this.Alpha = random(100,255);
     this.size = size;
   }
 
-  //A function that takes care of movement of the lines and collision with the sides of the canvas
-moveLineFunction(){
-    //Setting up the movement for the lines (x location and y location will have the value of speedX/Y added to create movement)
+
+
+  // Function for movement of the 'Orbs' / collision with the sides of the selected area
+  moveOrbFunction(){
+    // Movement for the Orbs ('x' location / 'y' location has the value of speedX/Y added to move orbs on the canvas)
     this.x1 = this.x1 + this.speedX;
     this.y1 = this.y1 + this.speedY;
-    
-    //This checks to see if the key 'LEFT_ARROW' is being pressed down, if so, swap the X / Y speeds with one another
+    // Checks if key 'LEFT_ARROW' is being pressed, if so, swap the X / Y speeds with one another.
     if(keyIsDown(LEFT_ARROW)){
-    this.speedX = this.speedY;
-    this.speedY = this.speedX;
+      this.speedX = this.speedY;
+      this.speedY = this.speedX;
     }
-    
-    //This is checking to see if the key 'UP_ARROW' is being pressed down, if so, add '1' to the speed values of speedX/Y for each press.
+    // Checking if key 'UP_ARROW' is being pressed, if so, add '1' to speed values of speedX/Y every press.
     else if(keyIsDown(UP_ARROW)){
-    this.speedX = this.speedX +1;
-    this.speedY = this.speedY +1;
+      this.speedX = this.speedX +1;
+      this.speedY = this.speedY +1;
     }
-    
-    //This checks to see if the key 'DOWN_ARROW' is being pressed, if so, set the values speedX/Y to a value within the original selection (-4,4).
+    // Checks if the key 'DOWN_ARROW' is being pressed, if so, set values speedX/Y to a value within the original selection (-3,3).
     else if(keyIsDown(DOWN_ARROW)){
-    this.speedX =  3;
-    this.speedY =  -2;
+      this.speedX =  -3;
+      this.speedY =  2;
     }
-
-    //This checks to see if the position of x1 is greater than the canvas width and if it also is less than 0. 
+    // Checking if position of x1 is greater than the canvas width and if also is less than 0.
     if (this.x1 > width || this.x1 < 0){
-      this.speedX *= -1; //If either of these conditions are met it will change the value of 'speedX'to equal that of speedX * -1
-    }//**Reverses the direction**
-    
-    //This checks to see if the position of y1 is greater than the canvas height and if it also is less than 0. 
-    if (this.y1 > (height) || this.y1 < 0){
-      this.speedY *= -1;//If either of these conditions are met it will change the value of 'speedY' to equal that of speedY * -1
-    }//**Reverses the direction**
+      this.speedX *= -1; // If either conditions met, change the value of 'speedX'to equal that of speedX * -1
+    }// *Reverses direction*
+    // Checking if position of y1 is greater than 625 and if also is less than 90.
+    if (this.y1 > 625 || this.y1 < 90){
+      this.speedY *= -1;//If either conditions met, change the value of 'speedY' to equal that of speedY * -1
+    }// *Reverses direction*
   }
 
-  //Class function that displays the lines and their reflected partner
-drawLineFunction(){
-    //Using the pre set variables (this.) from the constructor, this.fillcolour will equal to the random values of this.Green/Red/Blue/Alpha
-    this.fillcolour = color(this.Red, this.Green, this.Blue, this.Alpha);
-    fill(this.fillcolour);//This then fills a line with the a random colour 
-    stroke(this.fillcolour);//This then fills a lines stroke with the a random colour 
-    
-    //This creates a new operator (this.x2) and maps it to the value of x1 with a range of 0 to width to width to 0.
+
+
+  // Function to displays the Orbs and their reflected partners (4)
+  drawOrbFunction(){
+    // Pre set variables fill this.fillcolour
+    this.fillcolour = color(this.colValue, this.colValue, this.colValue, this.Alpha);
+    fill(this.fillcolour);// Fills a Orb with the a random colour (from black to white).
+    stroke(this.fillcolour);// Fills the stroke with same colour as above.
+
+    // Creates a new operator. Maps to the value of x1 with a range of 0 to width to width to 0.
     this.x2 = map(this.x1, 0, width, width, 0);
-    //This creates a new operator (this.y2) and maps it to the value of y1 with a range of 0 to height to height to 0.
+    // Creates a new operator. Maps to the value of y1 with a range of 0 to height to height to 0.
     this.y2 = map(this.y1, 0, height, height, 0);
-    
-    //this is creating the lines and their partners to refelect
-    line(this.x1, this.y1, this.size, this.size);
-    line(this.x2, this.y2, this.size, this.size);
-    line(this.x2, this.y1, this.size, this.size);
-    line(this.x1, this.y2, this.size, this.size);
-    
+
+    // The Orbs and their reflections.
+    ellipse(this.x1, this.y1, this.size, this.size);
+    ellipse(this.x2, this.y2, this.size, this.size);
+    ellipse(this.x2, this.y1, this.size, this.size);
+    ellipse(this.x1, this.y2, this.size, this.size);
+
   }
-}
+}//End of all code
