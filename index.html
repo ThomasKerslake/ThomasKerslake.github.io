@@ -1,56 +1,157 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Assignment Test</title>
-    <script src="p5.js" type="text/javascript"></script>
-    <script src="p5.dom.js" type="text/javascript"></script>
-    <script src="p5.sound.js" type="text/javascript"></script>
-    <script src="sketch.js" type="text/javascript"></script>
-    <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="cssStyle.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Kerslake designs</title>
+  <link rel="stylesheet" type="text/css" href="cssStyle.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Jura|Raleway|Questrial" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
 
+<body>
 
-  <body>
+  <h1 id="fadein100" class="PageTitle">Hello<span id="spanColour100">,</span></h1>
+  <h1 id="fadein50" class="PageTitle">my name is</h1>
+  <h1 id="fadein75" class="PageTitle"><span id="THover">T</span><span id="THover">h</span><span id="THover">o</span><span id="THover">m</span><span id="THover">a</span><span id="THover">s</span><span id="spanColour100">.</span></h1>
+  <div style="text-align: right;">
+    <span id="myDate"></span>
+    <span id="myClock"></span>
+  </div>
+  <hr  class="PageUnderline">
 
-<header id="myHeader"></header>
-<h1 class="PageTitle">ORBS OF LIFE</h1>
-<div id="myContainer"></div>
-<form>
-  <select class="DropDown" id="userAge" >
-    <option value=10>10</option>
-    <option value=20>20</option>
-    <option value=30>30</option>
-    <option value=40>40</option>
-    <option value=50>50</option>
-    <option value=60>60</option>
-    <option value=70>70</option>
-    <option value=80>80</option>
-    <option value=90>90</option>
-    <option value=100>100</option>
-  </select>
-  <br/>
-  
-</form>
-<p class="PagePara"> Welcome.</p>
-      <p class="PagePara">Located above is my project that uses data from an API to create a visual representation of data gathered the API.
-        The API I am using uses JSON to store information about remaining life expectancies of a person based off of their sex, date of birth,
-        country they live in and their current age. After querying the data a value of the expected amount of years can be used to create an abstract
-        visualization. The sphere above (Orbs) represent for every 4 orbs, 1 year of remaining life expectancy. When you select an age from the list
-      new orbs will be shot from the center, equal to that of the 'RLE'.</p>
+  <div id="navBg">
+    <div id="navContainer">
+      <label for="show-drop" class="show-drop"><i class="fas fa-angle-double-down"></i></label>
+      <input type="checkbox" id="show-drop" role="button" />
+      <ul id="menu">
+        <li><a href="#aboutSection"> About </a></li>
+        <span>|</span>
+        <li><a href="#portfolioSection"> Portfolio </a></li>
+        <span> | </span>
+        <li><a href="#instagramSection"> Instagram </a></li>
+      </ul>
+    </div>
+  </div>
 
-<br/>
+  <div class="outerContainerInfo" id="aboutSection">
+    <div class="contentContainer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            <h1>Who? <i class="fas fa-male"></i></h1>
+            <p>I’m currently a student at Plymouth University studying Internet Design.
+              Welcome to my portfolio; not sure how much content there is going to be on here at the time of writing this.
+              However, this will be the home of a selection of my current work and future projects / work to come. </p>
+            </div>
+            <div class="col-sm-4">
+              <h1>Work <i class="fas fa-cogs"></i></h1>
+              <p>All of my future work is going to be centered around frontend / backend development as I continue through my course at University.
+                Any side projects I also complete will be added here. However, I also hope to improve in other areas e.g.
+                other coding languages and how well I can use applications such as photoshop. </p>
+              </div>
+              <div class="col-sm-4">
+                <h1>Other <i class="fab fa-steam-symbol"></i></h1>
+                <p>The other me is pretty simple. I enjoy pretty much anything to do with computers (building or using them).
+                  I spend most of the time either chatting with my mates on teamspeak / playing games online,
+                  or going out for the night on a good old pub crawl. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <p class="PageInstructions"> Instructions.</p>
-  <p class="PageInstructions"> - Use the drop down box that is bellow the canvas to create bursts of orbs - </p>
-      <p class="PagePara">*If there doesn't seem to be anything happening, make sure the scripts have not been blocked at the top right of chrome!* .</p>
-  <p class="PagePara">Use the ↑ (Up Arrow) to increase the speed of the Orbs.</p>
-  <p class="PagePara">Use the ← (Left Arrow) to invert the direction of the Orbs.</p>
-  <p class="PagePara">Use the ↓ (Down Arrow) to reset the speed of the Orbs to a base 'regular' value.</p>
+        <h1 class="sectionTitle" id="portfolioSection">My work<span id="spanColour50">.</span></h1>
+        <hr  class="sectionUnderline">
 
-<footer id="myFooter"></footer>
+        <div data-tilt class="outerContainer">
+          <div class="contentContainer">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-4">
+                  <img class="workImages" id="myTransform" src="405work1.png" alt="Logo">
+                </div>
+                <div class="col-sm-4">
+                  <img  class="workImages" id="myTransform" src="405work3.png" alt="Logo">
+                </div>
+                <div class="col-sm-4">
+                  <img class="workImages" id="myTransform" src="405work2.png" href="" alt="Logo">
+                </div>
+                <div class="col-sm-12">
+                  <h1 class="sectionSubTitle">Mirrored lines</h1>
+                  <hr  class="subTitleUnderLine">
+                  <p id="pTextAlign">This project was developed for around about 3 weeks and had been through a few iterations before
+                    coming to this point. I also added some basic forms of interactions that a user could then use to change how the project appears.
+                    The project uses mirrored / reversed x and y coordinates to move lines around the canvas (watch the .mp4 bellow!).</p>
+                  </div>
+                  <div class="col-sm-4"></div><!-- Supporting columns for the MP4 -->
+                  <div class="col-sm-4">
+                    <video controls loop class="centerGif" id="myTransform" width="300" height="425" autoplay>
+                      <source src="MirroredLines.mp4" type="video/mp4">
+                        <source src="MirroredLines.ogg" type="video/ogg">
+                          Your browser does not support this video tag.
+                        </video>
+                      </div>
+                      <div class="col-sm-4"></div><!-- Supporting columns for the MP4 -->
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-  </body>
-</html>
+              <h1 class="sectionTitle" id="portfolioSection">More<span id="spanColour50">.</span><span id="spanColour50">.</span><span id="spanColour50">.</span></h1>
+              <hr  class="sectionUnderline">
+
+              <div data-tilt class="outerContainer">
+                <div class="contentContainer">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-sm-1"></div><!-- Supporting columns for the MP4 -->
+                      <div class="col-sm-10">
+                        <img class="workImageOrbs" id="myTransform" src="405work4-.png" alt="Logo">
+                      </div>
+                      <div class="col-sm-1"></div><!-- Supporting columns for the MP4 -->
+                      <div class="col-sm-12">
+                        <h1 class="sectionSubTitle">Orbs of Life</h1>
+                        <hr  class="subTitleUnderLine">
+                        <p id="pTextAlign">This project of mine uses data from an API to create a visual representation of data gathered from the API.
+                          The API I am using uses JSON to store information about remaining life expectancies of a person based off of their sex, date of birth,
+                          country they live in and their current age. I have used information from this API to generate an abstract representation of
+                          data related remaining life expectancies. Each of the orbs represents a year of life (however, a single orb has 3 reflecting partners,
+                          making is so 4 orbs equate to 1 year).</p>
+                        </div>
+                        <div class="col-sm-1"></div><!-- Supporting columns for the MP4 -->
+                        <div class="col-sm-10">
+                          <img class="workImages" id="myTransform" src="Orbsoflife.gif" alt="Logo">
+                        </div>
+                        <div class="col-sm-1"></div><!-- Supporting columns for the MP4 -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <h1 class="sectionTitle" id="instagramSection">Instagram<span id="spanColour50">.</span></h1>
+                <hr  class="sectionUnderline">
+
+                <div data-tilt class="outerContainer">
+                  <div class="contentContainer">
+                    <div class="container">
+                      <div class="col-sm-12">
+                        <h1 class="sectionSubTitle">My Instagram</h1>
+                        <hr  class="subTitleUnderLine">
+                        <p id="pTextAlign">Welcome to my Instagram! This is pulled straight from my Instagram using instafeed.js.
+                          Here you will be able to see all of the photos I upload to my Insta as it will update automatically.</p>
+                        </div>
+                        <div id="instafeed" id="myTransform" class="row"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <script src="instafeed.min.js" type="text/javascript"></script>
+                  <script src="sketch.js" type="text/javascript"></script>
+                  <script src="vanilla-tilt.js" type="text/javascript"></script>
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+                </body>
+                </html>
