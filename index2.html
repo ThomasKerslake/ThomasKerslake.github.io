@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta charset="UTF-8" />
+    <title>Three.js</title>
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <!--  Three.js CDN  -->
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/96/three.min.js"></script>-->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+      <script src="build/three.min.js"></script>
+  </head>
+  <body>
+
+    <div id="overlay">
+      <a id="High">HIGH QUALITY</a>
+      <a id="Med">MEDIUM QUALITY</a>
+      <a id="Low">LOWEST QUALITY</a>
+    </div>
+      <input type="file" class="" id="file" />
+      <label for="file" id="myLabel">ADD  MUSIC <i class="fas fa-file-upload"></i></label>
+      <a id="mybtn">NOT PLAYING? CLICK ME <i class="fas fa-volume-up"></i></a>
+    <!-- Shaders -->
+    <script src="shaders/LuminosityHighPassShader.js"></script>
+    <script src="shaders/CopyShader.js"></script>
+    <script src="shaders/AfterimageShader.js"></script>
+    <!-- Post Processing-->
+    <script src="postpro/EffectComposer.js"></script>
+    <script src="postpro/RenderPass.js"></script>
+    <script src="postpro/ShaderPass.js"></script>
+    <script src="postpro/SSAARenderPass.js"></script>
+		<script src="postpro/TAARenderPass.js"></script>
+    <script src="postpro/MaskPass.js"></script>
+    <script src="postpro/AfterimagePass.js"></script>
+		<script src="postpro/UnrealBloomPass.js"></script>
+    <!-- JS -->
+    <script src="js/dat.gui.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/index2.js"></script>
+  </body>
+</html>
