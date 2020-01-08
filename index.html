@@ -1,27 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Kerslake designs</title>
-  <link rel="stylesheet" type="text/css" href="css/cssStyle.css">
+  <title>TODAY I FEEL</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
+  <script src="build/three.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
 </head>
-
 <body>
 
-<h1>AUDIOLIZER.</h1>
-  <div class="set1">
-    <a href="index1.html">
-      <img id='img2' src="images/im2.png" alt="Image">
-    </a>
-    <a href="index2.html">
-      <img id='img1' src="images/im1.png" alt="Image">
-    </a>
-    <a href="index3.html">
-      <img id='img3' src="images/im3.png" alt="Image">
-    </a>
+  <div class="overlay"></div>
+
+  <div id="menuBtn" onclick="hideVideo()">
+    <img id="arrow" src="images/arrow.png">
   </div>
 
-  </body>
+  <div id="menuBtn" onclick="showVideo()">
+    <img id="arrowShow" src="images/arrow2.png">
+  </div>
+
+  <div id="menu">
+    <div id="canv"></div>
+    <video id="video" width="479" height="360" autoplay muted></video>
+    <ul>
+      <li>A RESPONSE TO EMOTI-OS.</li>
+      <li id="me">- Thomas Kerslake</li>
+    </ul>
+  </div>
+
+  <div id="emotionText">
+  <span id="question">How are you feeling today?</span>
+  <span id="currentEmotion">NEUTRAL</span>
+  </div>
+
+  <script src="build/OrbitControls.js"></script>
+</body>
 </html>
