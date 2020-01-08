@@ -45,6 +45,7 @@ var disColourMAT = 0x242605;
 window.onload = function() {
 	init();
 	animate();
+	hideNote();
 };
 
 //The init for the creation my Three.js camera / shapes / Objects / lighting
@@ -193,23 +194,24 @@ video.addEventListener('play', () => {
 	faceapi.matchDimensions(canvas, myDisplay);
 	//Run every 100m detection from video strem using faceapi.js / models
 	setInterval(async () => {
-		// myFaceDetections holds the json data produced that query to find the most prominent emotion
+		// myFaceDetections will hold the json data produced that we query to find the most prominent emotion
 		myFaceDetections = await faceapi
 			.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
 			.withFaceLandmarks()
 			.withFaceExpressions();
 		//Use this data in drawing and displaying the face marks / emotion labels
 		fittedDetections = faceapi.resizeResults(myFaceDetections, myDisplay);
-		canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+		canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); // Clear canv for new reading
 		faceapi.draw.drawFaceLandmarks(canvas, fittedDetections);
 		faceapi.draw.drawFaceExpressions(canvas, fittedDetections, minimumPorbility);
 
 		//Checking for detections
 		if (myFaceDetections) {
 			if (myFaceDetections.length > 0) {
-				//If detections found --> check for each emotion value
+				//If detections found --> check for emotion value
 				//The total value of the emotions will always = 1;
-				//If the value of an emotion is >= 0.7, its the most prominent emotion being detected
+				//If the value of an emotion is >= 0.51, its the most prominent emotion being detected
+				//0.7 is used to keep the switches between each detection smooth
 				if (myFaceDetections[0].expressions.happy >= 0.7) {
 					organiseEmotion(happyColourMAT, happyColourCMAT, emotionsBG.happy, 'HAPPY', 'black');
 					partTween(1.2, 1.2, 1.2);
@@ -244,6 +246,7 @@ video.addEventListener('play', () => {
 	}, 100); // 100m intervals
 });
 
+//Functions to show and hide video stream
 function hideVideo() {
 	var sidemenu = document.getElementById('menu');
 	sidemenu.style.visibility = 'hidden';
@@ -252,4 +255,12 @@ function hideVideo() {
 function showVideo() {
 	var sidemenu = document.getElementById('menu');
 	sidemenu.style.visibility = 'visible';
+}
+
+//Function to hide the webcam reminder note in bottom right
+function hideNote() {
+	setTimeout(function() {
+		document.getElementById('note').style.display = 'none';
+	}, 10000);
+	return false;
 }
